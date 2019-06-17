@@ -18,16 +18,20 @@ function pageReady() {
   localVideo = document.getElementById('localVideo');
   remoteVideo = document.getElementById('remoteVideo');
 
-  serverConnection = new WebSocket('wss://' + window.location.hostname + ':8443');
+  // serverConnection = new WebSocket('wss://' + window.location.hostname + ':8443');
+  serverConnection = new WebSocket('wss://' + 'localhost' + ':8443');
   serverConnection.onmessage = gotMessageFromServer;
 
   var constraints = {
-    video: true,
-    audio: true,
+    video: {
+
+    },
+    audio: false,
   };
 
   if(navigator.mediaDevices.getUserMedia) {
-    navigator.mediaDevices.getUserMedia(constraints).then(getUserMediaSuccess).catch(errorHandler);
+    //navigator.mediaDevices.getUserMedia(constraints).then(getUserMediaSuccess).catch(errorHandler);
+    navigator.mediaDevices.getDisplayMedia(constraints).then(getUserMediaSuccess).catch(errorHandler);
   } else {
     alert('Your browser does not support getUserMedia API');
   }
